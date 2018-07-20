@@ -1,13 +1,12 @@
-FROM node:9 as builder
+FROM node:9-alpine as builder
 
 ADD . /app
 
 WORKDIR /app
 
-RUN apt-get -y update 
-RUN apt-get -y upgrade
-RUN apt-get -y install git-all
-RUN apt-get -y install -y procps
+RUN apk update
+RUN apk upgrade
+RUN apk add git
 
 RUN yarn install
 RUN ./node_modules/.bin/grunt vendor
