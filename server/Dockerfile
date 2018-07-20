@@ -6,12 +6,12 @@ RUN apt-get install gcc \
     make g++ ca-certificates zlib1g-dev libffi-dev \
     libxml2 libxslt1-dev libxslt-dev libxml2-dev
 
-ADD . /app
+ADD . /app/server
 
-WORKDIR /app
+WORKDIR /app/server
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "--version"]
+# TODO: figure out the real entrypoint, cron setup, etc
 
-# TODO figure out entrypoint
+CMD ["/usr/bin/tail", "-f", "/dev/null"]
