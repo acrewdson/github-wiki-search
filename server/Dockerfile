@@ -12,6 +12,13 @@ WORKDIR /app/server
 
 RUN pip install -r requirements.txt
 
-# TODO: figure out the real entrypoint, cron setup, etc
+RUN curl -o /usr/local/bin/mantra -L \
+    https://github.com/pugnascotia/mantra/releases/download/0.0.1/mantra && \
+    chmod +x /usr/local/bin/mantra
 
-CMD ["/usr/bin/tail", "-f", "/dev/null"]
+ENV PYTHONPATH=$PYTHONPATH:/app
+
+WORKDIR /app
+
+# run indexing at 03:00 each day
+CMD ["/usr/local/bin/mantra", "0 3 * * * *", "python", "/app/server/index.py"]
